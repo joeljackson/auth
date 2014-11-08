@@ -13,6 +13,8 @@ class SessionsController < ApplicationController
     render :new
   end
 
-  def delete
+  def destroy
+    sign_out
+    redirect_to new_auth_sessions_path
   end
 end

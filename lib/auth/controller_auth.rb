@@ -9,4 +9,8 @@ module Auth::ControllerAuth
     raise ActiveRecord::RecordInvalid.new(auth_session) unless auth_session.valid?
     session[:user_id] = auth_session.user.id
   end
+
+  def sign_out
+    session.delete(:user_id)
+  end
 end
