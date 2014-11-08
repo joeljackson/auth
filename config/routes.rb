@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resource :sessions, only: [:new, :create, :destroy], as: 'auth_sessions'
+  root to: 'pages#super_secret'
+
+  resource :sessions, only: [:new, :create, :destroy, :show], as: 'auth_sessions'
 
   resource :pages do
     collection do

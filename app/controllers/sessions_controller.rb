@@ -5,6 +5,10 @@ class SessionsController < ApplicationController
     @session = Auth::Session.new
   end
 
+  def show
+    redirect_to new_auth_sessions_path
+  end
+
   def create
     sign_in
     redirect_to super_secret_pages_path
