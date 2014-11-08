@@ -1,8 +1,17 @@
 module Auth::ControllerAuth
+  def self.included(klass)
+    klass.send :helper_method, :current_user
+  end
+
+  def current_user
+    @controller_auth_current_user ||= User.find(session[:user_id])
+  end
+
   private
   def authenticate!
-    head :unauthorized unless session[:user_id] && User.find(session[:user_id])
+    head :unauthorized unless session[:user_id] && current_user
   end
+
 
   def sign_in
     auth_session = Auth::Session.new(params[:auth_session])
