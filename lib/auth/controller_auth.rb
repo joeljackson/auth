@@ -1,12 +1,9 @@
 module Auth::ControllerAuth
   private
   def authenticate!
-    users = {
-      joel: 'awesome',
-      justin: 'sortofawesome',
-      jonny: 'finehesallowedontoo'
-    }
+    user = User.find_by_username(params[:username])
+    
 
-   head :unauthorized unless params[:username].present? && params[:password].present? && users[params[:username].to_sym] == params[:password]
+    head :unauthorized unless params[:username].present? && params[:password].present? && user.present? && user.password == params[:password]
   end
 end
