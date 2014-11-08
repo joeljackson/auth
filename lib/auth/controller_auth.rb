@@ -1,8 +1,12 @@
 module Auth::ControllerAuth
   private
   def authenticate!
-    user = User.find_by_username(params[:username])
-    
-    head :unauthorized unless params[:username].present? && params[:password].present? && user.present? && user.password == Digest::SHA512.new.update(params[:password]).to_s
+    head :unauthorized unless session[:user_id] && User.find(session[:user_id])
+  end
+
+  def sign_in
+    auth_session = Auth::Session.new(params[:auth_session])
+    raise ActiveRecord::RecordInvalid.new(auth_session) unless auth_session.valid?
+    session[:user_id] = auth_session.user.id
   end
 end
